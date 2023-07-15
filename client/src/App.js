@@ -21,6 +21,9 @@ const App = () => {
   }, []);
  
   
+  
+
+
 
   const removeTaskLocal = (id) => {
     removeTask(id);
@@ -39,8 +42,22 @@ const App = () => {
   }
 
   const addTask = (task) => {
+    let isDuplicate = false;
+  
+    for(let item of tasks) {
+      if(item.id === task.id){
+        isDuplicate = true;
+        break;
+      }
+    }
+    
+    if(isDuplicate) {
+      console.log('Jest dubel');
+    } else {
        setTasks(tasks => [...tasks, task]);
+    }
   }
+  
 
   const updateTasks = (data) => {
 
@@ -71,7 +88,6 @@ console.log('taski: ', tasks);
               {task.name}
               <button className='btn btn--red' onClick={() => removeTaskLocal(task.id)}>Remove</button>
               </li>
-            
           ))
         }
       </ul>
