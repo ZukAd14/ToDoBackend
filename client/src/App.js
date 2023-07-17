@@ -15,9 +15,15 @@ const App = () => {
     const newSocket = io(connection);
     setSocket(newSocket);
 
+    newSocket.on('updateData', (data) => updateTasks(data))
     newSocket.on('addTask', (task) => addTask(task))
     newSocket.on('removeTask', (id) => removeTask(id));
-    newSocket.on('updateData', (data) => updateTasks(data))
+    
+    return () => {
+      newSocket.off('updateData');
+      newSocket.off('addTask');
+      newSocket.off('removeTask');
+    };
   }, []);
  
   
